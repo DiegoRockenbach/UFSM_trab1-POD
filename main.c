@@ -134,8 +134,9 @@ void printaBuckets(int** buckets, int* bucketSizes){
 
 int main(){
 
-  int i, numValues = 1000, maxValue = 500, bucketSizes[NUM_BUCKETS] = {0};
+  int i, numValues = 10000, maxValue = 10000, bucketSizes[NUM_BUCKETS] = {0};
   int *values, *buckets[NUM_BUCKETS];
+  clock_t start, end;
 
   values = generateValues(numValues, maxValue);
 
@@ -145,10 +146,13 @@ int main(){
 
   distributeBetweenBuckets(values, numValues, buckets, bucketSizes, maxValue);
 
-  printaBuckets(buckets, bucketSizes);
+  // Buckets não-ordenados
+  /* printaBuckets(buckets, bucketSizes); */
 
   // Algoritmos de ordenação:
 
+  start = clock();
+  
 /*   for (i = 0; i < NUM_BUCKETS; i++){
     insertionSort(buckets[i], bucketSizes[i]);
   } */
@@ -165,7 +169,13 @@ int main(){
     quickSort(buckets[i], 0, bucketSizes[i]);
   } */
 
-  printaBuckets(buckets, bucketSizes);
+  end = clock();
+
+  double time_taken = ((double)(end - start)) / CLOCKS_PER_SEC;
+  printf("\nTempo execucao: %f segundos\n", time_taken);
+
+  // Buckets ordenados
+  /* printaBuckets(buckets, bucketSizes); */
 
   // Liberar memória
   free(values);
